@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colorful Components</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      padding: 40px 20px 80px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ===== ANIMATED GRADIENT BACKGROUND ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        -45deg,
+        #0d0221, #1a0533, #002b5b, #003d1f,
+        #1a0533, #5c001a, #0d0221, #1a2800
+      );
+      background-size: 400% 400%;
+      animation: bgShift 14s ease infinite;
+      z-index: -2;
+    }
+
+    /* Floating blobs */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, #ff00cc33, transparent),
+        radial-gradient(ellipse 50% 60% at 80% 10%, #0099ff33, transparent),
+        radial-gradient(ellipse 55% 45% at 60% 80%, #00ffaa22, transparent),
+        radial-gradient(ellipse 45% 55% at 10% 75%, #ff660022, transparent),
+        radial-gradient(ellipse 40% 40% at 90% 60%, #aa00ff22, transparent);
+      animation: blobShift 10s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes blobShift {
+      0%   { opacity: 0.7; transform: scale(1) rotate(0deg); }
+      100% { opacity: 1;   transform: scale(1.15) rotate(5deg); }
+    }
+
+    /* ===== TITLE ===== */
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #ff6ec7, #ffcd3c, #3ce8ff, #a78bfa, #ff6ec7);
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+      filter: drop-shadow(0 0 20px #ff6ec755);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 50px;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    @keyframes shimmer {
+      from { background-position: 0%; }
+      to   { background-position: 200%; }
+    }
+
+    /* ===== SECTION LABEL ===== */
+    .section-label {
+      max-width: 1200px;
+      margin: 50px auto 18px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.15), transparent);
+    }
+
+    /* ===== CARDS ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      border-radius: 24px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.04);
+      border-radius: inherit;
+    }
+    .card:hover { transform: translateY(-8px) scale(1.02); }
+
+    .card-pink   { background: linear-gradient(135deg, #ff00cc88, #ff006688); box-shadow: 0 12px 40px #ff00cc55; }
+    .card-blue   { background: linear-gradient(135deg, #0066ff88, #00ccff88); box-shadow: 0 12px 40px #0066ff55; }
+    .card-green  { background: linear-gradient(135deg, #00cc6688, #00ffaa88); box-shadow: 0 12px 40px #00ff8855; }
+    .card-orange { background: linear-gradient(135deg, #ff880088, #ffdd0088); box-shadow: 0 12px 40px #ff880055; }
+    .card-purple { background: linear-gradient(135deg, #8800ff88, #dd00ff88); box-shadow: 0 12px 40px #aa00ff55; }
+    .card-red    { background: linear-gradient(135deg, #ff220088, #ff880088); box-shadow: 0 12px 40px #ff220055; }
+    .card-teal   { background: linear-gradient(135deg, #00bcd488, #00e5ff88); box-shadow: 0 12px 40px #00bcd455; }
+    .card-lime   { background: linear-gradient(135deg, #76ff0388, #ccff0088); box-shadow: 0 12px 40px #76ff0355; color: #111; }
+
+    .card-icon { font-size: 3rem; margin-bottom: 12px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.4)); }
+    .card h2 { font-size: 1.25rem; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .card p  { font-size: 0.88rem; opacity: 0.88; line-height: 1.6; }
+    .card-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.25);
+      padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 1px; backdrop-filter: blur(8px);
+    }
+
+    /* Shine sweep */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -75%;
+      width: 50%; height: 200%;
+      background: rgba(255,255,255,0.08);
+      transform: skewX(-20deg);
+      transition: left 0.5s ease;
+    }
+    .card:hover::after { left: 125%; }
+
+    /* ===== BUTTONS ===== */
+    .buttons-row { display: flex; flex-wrap: wrap; gap: 14px; max-width: 1200px; margin: 0 auto; }
+
+    .btn {
+      padding: 13px 30px; border-radius: 50px; border: none; font-size: 1rem;
+      font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s;
+      letter-spacing: 0.5px; position: relative; overflow: hidden;
+    }
+    .btn:hover { transform: scale(1.08); }
+    .btn:active { transform: scale(0.96); }
+
+    .btn-a { background: linear-gradient(90deg, #ff6ec7, #ff3366); color: white; box-shadow: 0 4px 20px #ff6ec755; }
+    .btn-b { background: linear-gradient(90deg, #00d2ff, #00ff88); color: #111;  box-shadow: 0 4px 20px #00d2ff55; }
+    .btn-c { background: linear-gradient(90deg, #a78bfa, #f472b6); color: white; box-shadow: 0 4px 20px #a78bfa55; }
+    .btn-d { background: linear-gradient(90deg, #fbbf24, #f97316); color: #111;  box-shadow: 0 4px 20px #fbbf2455; }
+    .btn-e { background: linear-gradient(90deg, #34d399, #059669); color: white; box-shadow: 0 4px 20px #34d39955; }
+    .btn-f { background: linear-gradient(90deg, #60a5fa, #7c3aed); color: white; box-shadow: 0 4px 20px #60a5fa55; }
+    .btn-g {
+      background: transparent;
+      border: 2px solid transparent;
+      background-image: linear-gradient(#0d0221, #0d0221), linear-gradient(90deg, #ff6ec7, #3ce8ff, #ffcd3c);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      color: white;
+    }
+
+    /* ===== PROGRESS ===== */
+    .progress-wrap { max-width: 1200px; margin: 0 auto; }
+    .progress-item { margin-bottom: 20px; }
+    .progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+    .progress-track {
+      height: 14px; background: rgba(255,255,255,0.07);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .progress-fill {
+      height: 100%; border-radius: 10px;
+      animation: fillUp 1.4s cubic-bezier(.22,.68,0,1.2) forwards;
+      box-shadow: 0 0 12px currentColor;
+    }
+    @keyframes fillUp { from { width: 0; } }
+    .fp1 { width: 85%; background: linear-gradient(90deg, #ff6ec7, #ff3366); }
+    .fp2 { width: 65%; background: linear-gradient(90deg, #00d2ff, #00ff88); }
+    .fp3 { width: 92%; background: linear-gradient(90deg, #fbbf24, #f97316); }
+    .fp4 { width: 48%; background: linear-gradient(90deg, #a78bfa, #7c3aed); }
+    .fp5 { width: 78%; background: linear-gradient(90deg, #34d399, #059669); }
+
+    /* ===== TAGS ===== */
+    .tags-row { display: flex; flex-wrap: wrap; gap: 10px; max-width: 1200px; margin: 0 auto; }
+    .tag {
+      padding: 7px 20px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tag:hover { transform: scale(1.12); box-shadow: 0 0 16px currentColor; }
+    .tg1  { background: #ff336644; color: #ff6b9d; border: 1px solid #ff336666; }
+    .tg2  { background: #ffcc0044; color: #ffd700; border: 1px solid #ffcc0066; }
+    .tg3  { background: #00ccff44; color: #7df9ff; border: 1px solid #00ccff66; }
+    .tg4  { background: #00ff8844; color: #7dffb3; border: 1px solid #00ff8866; }
+    .tg5  { background: #aa00ff44; color: #df9aff; border: 1px solid #aa00ff66; }
+    .tg6  { background: #ff880044; color: #ffb347; border: 1px solid #ff880066; }
+    .tg7  { background: #00aaff44; color: #66d9ff; border: 1px solid #00aaff66; }
+    .tg8  { background: #ff006644; color: #ff7eb3; border: 1px solid #ff006666; }
+    .tg9  { background: #00ddcc44; color: #7dfff5; border: 1px solid #00ddcc66; }
+    .tg10 { background: #ff220044; color: #ff8080; border: 1px solid #ff220066; }
+    .tg11 { background: #55ff0044; color: #aaff66; border: 1px solid #55ff0066; }
+    .tg12 { background: #ff44aa44; color: #ffaadd; border: 1px solid #ff44aa66; }
+
+    /* ===== AVATARS ===== */
+    .avatars-row { display: flex; gap: 14px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; align-items: center; }
+    .avatar {
+      width: 68px; height: 68px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1.2rem; cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 3px solid rgba(255,255,255,0.2);
+      position: relative;
+    }
+    .avatar::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 70%, rgba(255,255,255,0.4));
+      animation: spin 3s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .avatar:hover { transform: scale(1.2); }
+    .avatar:hover::after { opacity: 1; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .av1 { background: linear-gradient(135deg, #ff00cc, #ff0066); box-shadow: 0 4px 20px #ff00cc44; }
+    .av2 { background: linear-gradient(135deg, #0066ff, #00ccff); box-shadow: 0 4px 20px #0066ff44; }
+    .av3 { background: linear-gradient(135deg, #00cc66, #00ffaa); box-shadow: 0 4px 20px #00ff8844; }
+    .av4 { background: linear-gradient(135deg, #ff8800, #ffdd00); color: #111; box-shadow: 0 4px 20px #ff880044; }
+    .av5 { background: linear-gradient(135deg, #8800ff, #dd00ff); box-shadow: 0 4px 20px #aa00ff44; }
+    .av6 { background: linear-gradient(135deg, #ff2200, #ff8800); box-shadow: 0 4px 20px #ff220044; }
+    .av7 { background: linear-gradient(135deg, #00bcd4, #00e5ff); box-shadow: 0 4px 20px #00bcd444; }
+    .av8 { background: linear-gradient(135deg, #76ff03, #ccff00); color: #111; box-shadow: 0 4px 20px #76ff0344; }
+
+    /* ===== TOASTS ===== */
+    .toasts-wrap { max-width: 1200px; margin: 0 auto; }
+    .toast {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 22px; border-radius: 16px; margin-bottom: 12px;
+      border-left: 5px solid;
+      backdrop-filter: blur(16px);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .toast:hover { transform: translateX(6px); }
+    .toast-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .toast-text strong { display: block; margin-bottom: 3px; }
+    .toast-text span { font-size: 0.85rem; opacity: 0.65; }
+
+    .toast-success { border-color: #00ff88; background: linear-gradient(90deg, #00ff8815, #00ffaa08); box-shadow: 0 4px 20px #00ff8822; }
+    .toast-info    { border-color: #00ccff; background: linear-gradient(90deg, #00ccff15, #0066ff08); box-shadow: 0 4px 20px #00ccff22; }
+    .toast-warn    { border-color: #ffcc00; background: linear-gradient(90deg, #ffcc0015, #ff880008); box-shadow: 0 4px 20px #ffcc0022; }
+    .toast-error   { border-color: #ff3366; background: linear-gradient(90deg, #ff336615, #ff000008); box-shadow: 0 4px 20px #ff336622; }
+    .toast-purple  { border-color: #aa00ff; background: linear-gradient(90deg, #aa00ff15, #ff00cc08); box-shadow: 0 4px 20px #aa00ff22; }
+
+    /* ===== STAT PILLS ===== */
+    .stats-row { display: flex; flex-wrap: wrap; gap: 16px; max-width: 1200px; margin: 0 auto; }
+    .stat {
+      flex: 1; min-width: 160px;
+      padding: 22px 20px; border-radius: 20px;
+      text-align: center; cursor: pointer;
+      transition: transform 0.25s;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    .stat:hover { transform: scale(1.06); }
+    .stat-num { font-size: 2.2rem; font-weight: 900; margin-bottom: 4px; }
+    .stat-lbl { font-size: 0.8rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
+
+    .s1 { background: linear-gradient(135deg, #ff00cc22, #ff006622); box-shadow: 0 4px 24px #ff00cc33; }
+    .s1 .stat-num { background: linear-gradient(90deg,#ff6ec7,#ff3366); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .s2 { background: linear-gradient(135deg, #0066ff22, #00ccff22); box-shadow: 0 4px 24px #0066ff33; }
+    .s2 .stat-num { background: linear-gradient(90deg,#00d2ff,#00ff88); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .s3 { background: linear-gradient(135deg, #ff880022, #ffdd0022); box-shadow: 0 4px 24px #ff880033; }
+    .s3 .stat-num { background: linear-gradient(90deg,#fbbf24,#f97316); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .s4 { background: linear-gradient(135deg, #8800ff22, #dd00ff22); box-shadow: 0 4px 24px #aa00ff33; }
+    .s4 .stat-num { background: linear-gradient(90deg,#a78bfa,#f472b6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    /* ===== TOGGLE SWITCHES ===== */
+    .toggles-row { display: flex; flex-wrap: wrap; gap: 20px; max-width: 1200px; margin: 0 auto; align-items: center; }
+    .toggle-item { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
+    .toggle { position: relative; width: 52px; height: 28px; cursor: pointer; }
+    .toggle input { display: none; }
+    .toggle-track {
+      position: absolute; inset: 0; border-radius: 14px;
+      transition: background 0.3s;
+    }
+    .toggle input:checked ~ .toggle-track { filter: brightness(1.2); }
+    .toggle-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: white; transition: left 0.3s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .toggle input:checked ~ .toggle-thumb { left: 27px; }
+    .trk1 { background: linear-gradient(90deg, #555, #555); }
+    .toggle input:checked ~ .trk1 { background: linear-gradient(90deg, #ff6ec7, #ff3366); }
+    .trk2 { background: #555; }
+    .toggle input:checked ~ .trk2 { background: linear-gradient(90deg, #00d2ff, #00ff88); }
+    .trk3 { background: #555; }
+    .toggle input:checked ~ .trk3 { background: linear-gradient(90deg, #a78bfa, #f472b6); }
+    .trk4 { background: #555; }
+    .toggle input:checked ~ .trk4 { background: linear-gradient(90deg, #fbbf24, #f97316); }
+  </style>
+</head>
+<body>
+
+  <h1>✨ Colorful Components ✨</h1>
+  <p class="subtitle">rainbow · vivid · alive</p>
+
+  <!-- STATS -->
+  <div class="section-label">📊 Stats</div>
+  <div class="stats-row">
+    <div class="stat s1"><div class="stat-num">2.4M</div><div class="stat-lbl">Active Users</div></div>
+    <div class="stat s2"><div class="stat-num">99.9%</div><div class="stat-lbl">Uptime</div></div>
+    <div class="stat s3"><div class="stat-num">$82K</div><div class="stat-lbl">Revenue</div></div>
+    <div class="stat s4"><div class="stat-num">4.97⭐</div><div class="stat-lbl">Rating</div></div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="section-label">🃏 Cards</div>
+  <div class="grid">
+    <div class="card card-pink">
+      <div class="card-badge">NEW</div>
+      <div class="card-icon">🚀</div>
+      <h2>Launch Ready</h2>
+      <p>Your project is live and reaching millions of users worldwide.</p>
+    </div>
+    <div class="card card-blue">
+      <div class="card-badge">PRO</div>
+      <div class="card-icon">💎</div>
+      <h2>Premium Access</h2>
+      <p>Unlock all features with unlimited storage and priority support.</p>
+    </div>
+    <div class="card card-green">
+      <div class="card-badge">✓ LIVE</div>
+      <div class="card-icon">🌿</div>
+      <h2>All Systems Go</h2>
+      <p>Every service is healthy. Uptime at 99.99% this month.</p>
+    </div>
+    <div class="card card-orange">
+      <div class="card-badge">🔥 HOT</div>
+      <div class="card-icon">⚡</div>
+      <h2>Trending Now</h2>
+      <p>Over 1,200 people are viewing this component right now.</p>
+    </div>
+    <div class="card card-purple">
+      <div class="card-badge">AI</div>
+      <div class="card-icon">🤖</div>
+      <h2>AI Powered</h2>
+      <p>Intelligent suggestions that adapt to your workflow in real time.</p>
+    </div>
+    <div class="card card-teal">
+      <div class="card-badge">NEW</div>
+      <div class="card-icon">🌊</div>
+      <h2>Ocean Deep</h2>
+      <p>Dive into a sea of features designed for modern interfaces.</p>
+    </div>
+    <div class="card card-lime">
+      <div class="card-badge">ECO</div>
+      <div class="card-icon">🌱</div>
+      <h2>Green Energy</h2>
+      <p>100% carbon neutral hosting powered by renewable sources.</p>
+    </div>
+    <div class="card card-red">
+      <div class="card-badge">SALE</div>
+      <div class="card-icon">🎯</div>
+      <h2>Flash Deal</h2>
+      <p>Limited time offer — save 60% before the timer runs out.</p>
+    </div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="section-label">🔘 Buttons</div>
+  <div class="buttons-row">
+    <button class="btn btn-a">🌸 Blossom</button>
+    <button class="btn btn-b">🌊 Aqua</button>
+    <button class="btn btn-c">💜 Dream</button>
+    <button class="btn btn-d">🔆 Solar</button>
+    <button class="btn btn-e">🌿 Forest</button>
+    <button class="btn btn-f">🪐 Galaxy</button>
+    <button class="btn btn-g">✦ Outline</button>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="section-label">📈 Progress</div>
+  <div class="progress-wrap">
+    <div class="progress-item">
+      <div class="progress-label"><span>🌸 Design</span><span>85%</span></div>
+      <div class="progress-track"><div class="progress-fill fp1"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>💚 Development</span><span>65%</span></div>
+      <div class="progress-track"><div class="progress-fill fp2"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>⚡ Testing</span><span>92%</span></div>
+      <div class="progress-track"><div class="progress-fill fp3"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>💜 Deployment</span><span>48%</span></div>
+      <div class="progress-track"><div class="progress-fill fp4"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>🌿 Sustainability</span><span>78%</span></div>
+      <div class="progress-track"><div class="progress-fill fp5"></div></div>
+    </div>
+  </div>
+
+  <!-- TAGS -->
+  <div class="section-label">🏷️ Tags</div>
+  <div class="tags-row">
+    <span class="tag tg1">⚛️ React</span>
+    <span class="tag tg2">⚡ JavaScript</span>
+    <span class="tag tg3">🔷 TypeScript</span>
+    <span class="tag tg4">🟢 Node.js</span>
+    <span class="tag tg5">🔮 GraphQL</span>
+    <span class="tag tg6">🔥 Firebase</span>
+    <span class="tag tg7">🌊 Tailwind</span>
+    <span class="tag tg8">🩷 Figma</span>
+    <span class="tag tg9">▲ Next.js</span>
+    <span class="tag tg10">🦀 Rust</span>
+    <span class="tag tg11">🐍 Python</span>
+    <span class="tag tg12">🌸 CSS</span>
+  </div>
+
+  <!-- AVATARS -->
+  <div class="section-label">👤 Avatars</div>
+  <div class="avatars-row">
+    <div class="avatar av1">RZ</div>
+    <div class="avatar av2">AL</div>
+    <div class="avatar av3">MK</div>
+    <div class="avatar av4">JS</div>
+    <div class="avatar av5">PW</div>
+    <div class="avatar av6">TS</div>
+    <div class="avatar av7">KL</div>
+    <div class="avatar av8">NY</div>
+  </div>
+
+  <!-- TOGGLES -->
+  <div class="section-label">🔦 Toggles</div>
+  <div class="toggles-row">
+    <div class="toggle-item">
+      <label class="toggle">
+        <input type="checkbox" checked>
+        <div class="toggle-track trk1"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+      <span>Dark Mode</span>
+    </div>
+    <div class="toggle-item">
+      <label class="toggle">
+        <input type="checkbox" checked>
+        <div class="toggle-track trk2"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+      <span>Notifications</span>
+    </div>
+    <div class="toggle-item">
+      <label class="toggle">
+        <input type="checkbox">
+        <div class="toggle-track trk3"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+      <span>Analytics</span>
+    </div>
+    <div class="toggle-item">
+      <label class="toggle">
+        <input type="checkbox" checked>
+        <div class="toggle-track trk4"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+      <span>Auto-save</span>
+    </div>
+  </div>
+
+  <!-- TOASTS -->
+  <div class="section-label">🔔 Notifications</div>
+  <div class="toasts-wrap">
+    <div class="toast toast-success">
+      <span class="toast-icon">✅</span>
+      <div class="toast-text"><strong>Deploy successful</strong><span>Your app is live at production — v2.4.1</span></div>
+    </div>
+    <div class="toast toast-info">
+      <span class="toast-icon">💡</span>
+      <div class="toast-text"><strong>New update available</strong><span>Claude Code 2.2.0 is ready to install</span></div>
+    </div>
+    <div class="toast toast-warn">
+      <span class="toast-icon">⚠️</span>
+      <div class="toast-text"><strong>API limit approaching</strong><span>You've used 80% of your monthly quota</span></div>
+    </div>
+    <div class="toast toast-error">
+      <span class="toast-icon">❌</span>
+      <div class="toast-text"><strong>Build failed</strong><span>TypeScript error in src/components/Card.tsx:42</span></div>
+    </div>
+    <div class="toast toast-purple">
+      <span class="toast-icon">🤖</span>
+      <div class="toast-text"><strong>AI suggestion ready</strong><span>Claude found 3 ways to optimize your code</span></div>
+    </div>
+  </div>
+
+</body>
+</html>
