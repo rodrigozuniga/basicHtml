@@ -30,7 +30,8 @@ jobs:
     - name: Commit and Push Log File
       run: |
         git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@://github.com"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git pull --rebase --autostash origin main
         git add log.txt
         # Only commit if log.txt actually changed to avoid errors
         git diff-index --quiet HEAD || git commit -m "Automated log update"
