@@ -1,4 +1,4 @@
-name: Print Numbers Every 5 Minutes
+name: Print Numbers Every 50 Minutes
 
 on:
   schedule:
