@@ -2,7 +2,7 @@ name: Print Numbers Every 5 Minutes
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/50 * * * *'
   workflow_dispatch:
 
 # Grant permission to push code changes back to the repository
