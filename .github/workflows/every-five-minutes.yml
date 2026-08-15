@@ -9,6 +9,11 @@ on:
 permissions:
   contents: write
 
+# Prevent scheduled runs from attempting to update main at the same time.
+concurrency:
+  group: log-update-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   run-python-loop:
     runs-on: ubuntu-latest
@@ -35,4 +40,12 @@ jobs:
         git add log.txt
         # Only commit if log.txt actually changed to avoid errors
         git diff-index --quiet HEAD || git commit -m "Automated log update"
-        git push
+        for attempt in 1 2 3; do
+          if git push origin HEAD:main; then
+            exit 0
+          fi
+          if [ "$attempt" -lt 3 ]; then
+            git pull --rebase --autostash origin main
+          fi
+        done
+        exit 1
